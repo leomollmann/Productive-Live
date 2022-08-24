@@ -10,7 +10,7 @@ function MainMenu({ canvas }: Props) {
     }
 
     return (
-        <div id="menu">
+        <div className="menu dark">
             <div id="title">Productive</div>
             <button id="play" onClick={lockPointer}>Resume</button>
             <div id="instructions">

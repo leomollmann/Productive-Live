@@ -12,7 +12,6 @@ function setOverlay(overlay: OverlayTypes) {
 
 export function checkUserState() {
     const overlay = OverlayManager.getState()
-    console.log('check', overlay.current, controls)
     if(overlay.current === OverlayTypes.None) {
         if(controls.keys[Keys.Escape]) {
             setOverlay(OverlayTypes.Main)
