@@ -4,7 +4,7 @@ type Props = {
     canvas: React.RefObject<HTMLCanvasElement>
 }
 
-function Menu({ canvas }: Props) {
+function MainMenu({ canvas }: Props) {
     const lockPointer = () => {
         canvas.current!.requestPointerLock()
     }
@@ -24,4 +24,4 @@ function Menu({ canvas }: Props) {
     )
 }
 
-export default Menu
+export default MainMenu

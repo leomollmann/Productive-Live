@@ -2,18 +2,19 @@ import { Camera, Euler, Vector3 } from "three";
 import controls from "./interaction";
 
 const PI_2 = Math.PI / 2
-const BASE_VELOCITY = 0.1
+const BASE_VELOCITY = 10 // m/s
 
-export function getInteractionMovement(camera: Camera) {
+export function getInteractionMovement(camera: Camera, delta: number) {
   if(controls.locked) {
-    if(controls.keys.KeyW) moveZ(camera, BASE_VELOCITY)
-    else if(controls.keys.KeyS) moveZ(camera, -BASE_VELOCITY)
+    const distance = BASE_VELOCITY * delta
+    if(controls.keys.KeyW) moveZ(camera, distance)
+    else if(controls.keys.KeyS) moveZ(camera, -distance)
 
-    if(controls.keys.KeyD) moveX(camera, BASE_VELOCITY)
-    else if(controls.keys.KeyA) moveX(camera, -BASE_VELOCITY)
+    if(controls.keys.KeyD) moveX(camera, distance)
+    else if(controls.keys.KeyA) moveX(camera, -distance)
     
-    if(controls.keys.Space) moveY(camera, BASE_VELOCITY)
-    else if(controls.keys.ShiftLeft) moveY(camera, -BASE_VELOCITY)
+    if(controls.keys.Space) moveY(camera, distance)
+    else if(controls.keys.ShiftLeft) moveY(camera, -distance)
   }
 }
 

@@ -3,6 +3,7 @@ import * as THREE from 'three'
 import controls, { Keys, resetConstrols } from './interaction'
 import { getInteractionRotation, getInteractionMovement } from './movement'
 import texture from '../Textures/crosshair.png'
+import { OverlayManager, OverlayTypes } from '..'
 
 const stats = new Stats()
 stats.showPanel(0)
@@ -76,16 +77,6 @@ function onFloor() {
     }
 }
 
-const onKeyDown = (e: KeyboardEvent) => { controls.keys[e.code as Keys] = true 
-}
-const onKeyUp = (e: KeyboardEvent) => { controls.keys[e.code as Keys] = false }
-const onMouseMove = (e: MouseEvent) => {
-  if(controls.locked) {
-    controls.mouseX += e.movementX
-    controls.mouseY += e.movementY
-  }
-}
-
 export function pauseGame() {
     resetConstrols()
     controls.locked = false
@@ -102,8 +93,9 @@ function animate() {
     if(!clock.running) return
 
     stats.begin()
+    const delta = clock.getDelta()
 
-    getInteractionMovement(camera)
+    getInteractionMovement(camera, delta)
     getInteractionRotation(camera)
 
     render()
@@ -119,25 +111,57 @@ function render() {
     renderer.render(HUDScene, HUDCamera)
 }
 
-export function initRenderer(canvas: HTMLCanvasElement) {
-    renderer = new THREE.WebGLRenderer({ antialias: true, canvas })
+export function initRenderer(canvas: React.RefObject<HTMLCanvasElement>) {
+    renderer = new THREE.WebGLRenderer({ antialias: true, canvas: canvas.current! })
     renderer.setPixelRatio(window.devicePixelRatio)
     renderer.setSize(window.innerWidth, window.innerHeight)
     renderer.autoClear = false
 
-    function onWindowResize() {
+    render()
+}
+
+export function addListeners(canvas: React.RefObject<HTMLCanvasElement>) {
+    const onWindowResize = () => {
         camera.aspect = window.innerWidth / window.innerHeight
         camera.updateProjectionMatrix()
         HUDCamera.updateProjectionMatrix()
         renderer.setSize(window.innerWidth, window.innerHeight)
         render()
-    } 
+    }
+    
+    const onKeyDown = (e: KeyboardEvent) => { controls.keys[e.code as Keys] = true }
+    const onKeyUp = (e: KeyboardEvent) => { controls.keys[e.code as Keys] = false }
+    const onMouseMove = (e: MouseEvent) => {
+        if(controls.locked) {
+            controls.mouseX += e.movementX
+            controls.mouseY += e.movementY
+        }
+    }
+
+    const onPointerlockChange = () => {
+        if(document.pointerLockElement === canvas.current) {
+            OverlayManager.getState().current = OverlayTypes.None
+            resumeGame()
+        } else {
+            OverlayManager.getState().current = OverlayTypes.Main
+            pauseGame()
+        }
+        OverlayManager.notify()
+    }
 
     window.addEventListener('keydown', onKeyDown)
     window.addEventListener('keyup', onKeyUp)
     window.addEventListener('resize', onWindowResize)
-    canvas.addEventListener('click', onFloor)
-    canvas.ownerDocument.addEventListener('mousemove', onMouseMove)
+    canvas.current!.ownerDocument.addEventListener('pointerlockchange', onPointerlockChange)
+    canvas.current!.addEventListener('click', onFloor)
+    canvas.current!.ownerDocument.addEventListener('mousemove', onMouseMove)
 
-    render()
+    return () => {
+        window.removeEventListener('keydown', onKeyDown)
+        window.removeEventListener('keyup', onKeyUp)
+        window.removeEventListener('resize', onWindowResize)
+        canvas.current!.ownerDocument.removeEventListener('pointerlockchange', onPointerlockChange)
+        canvas.current!.removeEventListener('click', onFloor)
+        canvas.current!.ownerDocument.removeEventListener('mousemove', onMouseMove)
+    }
 }
