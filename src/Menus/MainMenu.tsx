@@ -11,8 +11,8 @@ function MainMenu({ canvas }: Props) {
 
     return (
         <div id="menu">
-        <div id="title">Productive</div>
-        <button id="play" onClick={lockPointer}>Resume</button>
+            <div id="title">Productive</div>
+            <button id="play" onClick={lockPointer}>Resume</button>
             <div id="instructions">
                 <span>Move: WASD</span>
                 <span>Up: SPACE</span>

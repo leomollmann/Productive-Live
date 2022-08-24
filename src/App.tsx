@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react'
-import { addListeners, initRenderer } from './Engine/loop'
-import Menus from './Menus'
+import { addListeners } from './Engine/interaction'
+import { initRenderer } from './Engine/loop'
+import Menus from './Menus/Menus'
 
 function App() {
   const canvas = useRef<HTMLCanvasElement>(null)
