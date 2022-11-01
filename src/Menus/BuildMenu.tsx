@@ -29,7 +29,9 @@ function BuildMenu({ close }: Props) {
                         )}
                     </section>
                     <section className="flex bg-white shadow p-2 w-[500px] shrink-0 h-full">
-                        <PumpMasterCard />
+                        {MasterCard || (
+                            <h2 className="text-2xl text-gray-2 m-auto">Select a Building</h2>
+                        )}
                     </section>
                 </div>
             </div>

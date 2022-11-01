@@ -21,12 +21,12 @@ export function ReservatoryMasterCard({ close }: Props) {
     
     return (
         <section className='flex flex-col w-full gap-4 scroll-auto'>
-            <h1 className='text-center text-base'>{ReservatoryMaster.title}</h1>
             <div className='flex gap-4 h-fit w-full'>
-                <img height={256} width={256} src={reservatoryImg}/>
-                <span>
+                <img height={192} width={192} src={reservatoryImg}/>
+                <span className='flex flex-col gap-4'>
+                    <h1 className='text-center text-base'>{ReservatoryMaster.title}</h1>
                     <Button onClick={build}>PLACE <VerticalAlignBottomOutlined /></Button>
-                    <p className='mt-4'>{ReservatoryMaster.description}</p>
+                    <p>{ReservatoryMaster.description}</p>
                 </span>
             </div>
         </section>

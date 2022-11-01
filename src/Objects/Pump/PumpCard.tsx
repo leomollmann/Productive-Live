@@ -7,6 +7,7 @@ import { initBuild } from '../../Tools/build'
 import { VerticalAlignBottomOutlined } from '@ant-design/icons'
 import Button from '../../Components/Button'
 import { Chart, LineAdvance, Axis } from "bizcharts";
+import { useEffect } from 'react'
 
 type Props = {
     close(): void
@@ -21,13 +22,16 @@ const data = new Array(SAMPLE + 1).fill(0).map((_, i) => {
     }
 })
 
-export function PumpMasterCard() {
+export function PumpMasterCard({ close }: Props) {
     const state = GameState.useObserver()
+    useEffect(() => {
+        GameState.notify()
+    }, [])
 
     const build = () => {
         state.build = PumpMaster.model.object
         initBuild()
-        
+        close()
     }
     
     return (
@@ -43,7 +47,6 @@ export function PumpMasterCard() {
             <Chart padding={[20, 20, 20, 40]} autoFit height={300} data={data}  >
                 <LineAdvance
                     shape="smooth"
-                    
                     area
                     position="work*efficiency"
                 />
