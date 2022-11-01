@@ -1,28 +1,10 @@
-import { Material, Object3D, Scene } from "three"
+import { Object3D, Scene } from "three"
+import Model from "../Model"
 import material from "./Pump.mtl"
 import object from "./Pump.obj"
-import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js'
-import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
-
-class PumpModel {
-    public material?: Material
-    public object?: Object3D
-
-    async load(): Promise<void> {
-        const materialLoader = new MTLLoader()
-        const materials = await materialLoader.loadAsync(material)
-        materials.preload()
-
-        const objectLoader = new OBJLoader()
-        objectLoader.materials = materials
-        this.object = await objectLoader.loadAsync(object)
-
-        this.object.scale.set(0.01, 0.01, 0.01)
-    }
-}
 
 export const PumpMaster = {
-    model: new PumpModel(),
+    model: new Model(material, object),
     title: "Liquid Pump",
     description: "Centrifugal liquid pump, used to move liquid content between pipes. Moves fluid from the bottom pipe to the center pipe when the passive flow isn't enought.",
     pressure: 10,

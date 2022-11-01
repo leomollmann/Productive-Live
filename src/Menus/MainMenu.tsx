@@ -1,12 +1,6 @@
-import { PumpMaster } from "../Objects/Pump/Pump"
-
 type Props = {
     close(): void 
 }
-
-Promise.all([
-    PumpMaster.model.load()
-])
 
 function MainMenu({ close }: Props) {
     return (
@@ -18,7 +12,8 @@ function MainMenu({ close }: Props) {
                 <span>Up: SPACE</span>
                 <span>Down: Left Shift</span>
                 <span>Look: Mouse</span>
-                <span>Place: Left Click</span>
+                <span>Build: B</span>
+                <span>Cancel Build: C</span>
             </div>
         </div> 
     )

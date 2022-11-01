@@ -56,10 +56,6 @@ body {
   margin-bottom: 40px;
 }
 
-.spin {
-  animation: rotate 2s infinite linear;
-}
-
 @keyframes rotate {
   from {
     transform: rotateZ(0deg);
@@ -68,4 +64,22 @@ body {
   to {
     transform: rotateZ(-360deg);
   }
+}
+
+@keyframes expand {
+  from {
+    height: 0;
+  }
+
+  to {
+    height: 100%;
+  }
+}
+
+.spinable:hover .spinner {
+  animation: rotate 2s infinite linear;
+}
+
+.expandable:hover .expander {
+  animation: expand 1s infinite linear alternate;
 }

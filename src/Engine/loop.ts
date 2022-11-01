@@ -1,11 +1,6 @@
-import Stats from 'stats.js'
 import * as THREE from 'three'
 import { getInteractionRotation, getInteractionMovement } from './movement'
 import { camera, floor, scene } from './scene'
-
-const stats = new Stats()
-stats.showPanel(0)
-document.body.appendChild(stats.dom)
 
 const clock = new THREE.Clock()
 const caster = new THREE.Raycaster()
@@ -36,14 +31,12 @@ export function resumeGame() {
 function animate() {
     if(!clock.running) return
 
-    stats.begin()
     const delta = clock.getDelta()
 
     getInteractionMovement(camera, delta)
     getInteractionRotation(camera)
 
     render()
-    stats.end()
 
     requestAnimationFrame(animate)
 }
