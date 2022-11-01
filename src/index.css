@@ -1,9 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   overflow: hidden;
   margin: 0px;
+  font-family: monospace;
 }
 
-#menu {
+.menu {
   position: fixed;
   top: 0;
   left: 0;
@@ -13,13 +18,21 @@ body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background-color: #000000aa;
   z-index: 1;
+}
+
+.menu.dark {
+  background-color: #000000aa;
+}
+
+.menu-container {
+  background-color: white;
+  border: 2px solid dimgray;
+  padding: 10px;
 }
 
 #title {
   color: white;
-  font-family: monospace;
   font-size: 42px;
   margin-bottom: 20px;
   user-select: none;
@@ -27,7 +40,6 @@ body {
 
 #instructions {
   color: white;
-  font-family: monospace;
   font-size: 16px;
   user-select: none;
   display: grid;
@@ -37,10 +49,23 @@ body {
 #play {
   background-color: white;
   color: dimgray;
-  font-family: monospace;
   font-size: 18px;
   padding: 8px 40px;
   border: none;
   outline: none;
   margin-bottom: 40px;
+}
+
+.spin {
+  animation: rotate 2s infinite linear;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotateZ(0deg);
+  }
+
+  to {
+    transform: rotateZ(-360deg);
+  }
 }
