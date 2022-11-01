@@ -55,3 +55,17 @@ body {
   outline: none;
   margin-bottom: 40px;
 }
+
+.spin {
+  animation: rotate 2s infinite linear;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotateZ(0deg);
+  }
+
+  to {
+    transform: rotateZ(-360deg);
+  }
+}

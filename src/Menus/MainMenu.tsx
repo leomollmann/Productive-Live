@@ -1,18 +1,18 @@
-import React from "react"
+import { PumpMaster } from "../Objects/Pump/Pump"
 
 type Props = {
-    canvas: React.RefObject<HTMLCanvasElement>
+    close(): void 
 }
 
-function MainMenu({ canvas }: Props) {
-    const lockPointer = () => {
-        canvas.current!.requestPointerLock()
-    }
+Promise.all([
+    PumpMaster.model.load()
+])
 
+function MainMenu({ close }: Props) {
     return (
         <div className="menu dark">
             <div id="title">Productive</div>
-            <button id="play" onClick={lockPointer}>Resume</button>
+            <button id="play" onClick={close}>Resume</button>
             <div id="instructions">
                 <span>Move: WASD</span>
                 <span>Up: SPACE</span>

@@ -1,29 +1,14 @@
-import React from "react"
-import ShaftMine from "../Objects/ShaftMine"
-import BuildingCard from "./BuildingCard"
+import { PumpCard } from "../Objects/Pump/PumpCard"
 
 type Props = {
-    canvas: React.RefObject<HTMLCanvasElement>
+    close(): void
 }
 
-const buildings = [
-    new ShaftMine()
-]
-
-function BuildMenu({ canvas }: Props) {
-    const lockPointer = () => {
-        canvas.current!.requestPointerLock()
-    }
-
+function BuildMenu({ close }: Props) {
     return (
         <div className="menu">
-            <div className="menu-container">
-                <h1>Build Menu</h1>
-                <div>
-                    {buildings.map(x => <BuildingCard building={x}/>)}
-                </div>
-                <button id="play" onClick={lockPointer}>Resume</button>
-            </div>
+            <PumpCard close={close}/>
+            <button id="play" onClick={close}>Resume</button>
         </div> 
     )
 }

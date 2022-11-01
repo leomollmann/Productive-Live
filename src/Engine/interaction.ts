@@ -1,4 +1,3 @@
-import { Cube } from "../Objects/cube"
 import { buildObject } from "../Tools/build"
 import { resizeScene } from "./loop"
 import { checkUserState, setIdleState } from "./userSate"
@@ -11,6 +10,8 @@ export enum Keys {
 	MoveUp = 'Space',
 	MoveDown = 'ShiftLeft',
 	Escape = 'Escape',
+    ProductionPlanner = 'KeyP',
+    Cancel = 'KeyC',
 	Build = 'KeyB'
 }
 
@@ -30,7 +31,9 @@ const controls: Controls = {
 		[Keys.MoveUp]: false,
 		[Keys.MoveDown]: false,
 		[Keys.Escape]: false,
-		[Keys.Build]: false
+		[Keys.Build]: false,
+        [Keys.Cancel]: false,
+        [Keys.ProductionPlanner]: false
 	},
 	locked: false,
 	mouseX: 0,
@@ -46,11 +49,6 @@ export function unlockControls() {
 
 export function lockControls() {
 	controls.locked = true
-}
-
-// temp
-function build() {
-	buildObject(new Cube())
 }
 
 export function addListeners(canvas: React.RefObject<HTMLCanvasElement>) { 
@@ -81,7 +79,7 @@ export function addListeners(canvas: React.RefObject<HTMLCanvasElement>) {
     window.addEventListener('keyup', onKeyUp)
     window.addEventListener('resize', resizeScene)
     canvas.current!.ownerDocument.addEventListener('pointerlockchange', onPointerlockChange)
-    canvas.current!.addEventListener('click', build)
+    canvas.current!.addEventListener('click', buildObject)
     canvas.current!.ownerDocument.addEventListener('mousemove', onMouseMove)
 
     return () => {
@@ -89,7 +87,7 @@ export function addListeners(canvas: React.RefObject<HTMLCanvasElement>) {
         window.removeEventListener('keyup', onKeyUp)
         window.removeEventListener('resize', resizeScene)
         canvas.current!.ownerDocument.removeEventListener('pointerlockchange', onPointerlockChange)
-        canvas.current!.removeEventListener('click', build)
+        canvas.current!.removeEventListener('click', buildObject)
         canvas.current!.ownerDocument.removeEventListener('mousemove', onMouseMove)
     }
 }

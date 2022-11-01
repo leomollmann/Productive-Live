@@ -7,10 +7,16 @@ import MutationStore from './Lib/MutationStore'
 export enum OverlayTypes {
   None,
   Main,
+  ProductionPlanner,
   Build
 }
 
-export const OverlayManager = MutationStore<{ current: OverlayTypes }>({ current: OverlayTypes.Main })
+type GameStateType = { 
+  overlay: OverlayTypes
+  build?: THREE.Object3D 
+}
+
+export const GameState = MutationStore<GameStateType>({ overlay: OverlayTypes.Main })
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

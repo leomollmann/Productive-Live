@@ -16,6 +16,7 @@ scene.add(new THREE.ArrowHelper(new THREE.Vector3(1,0,0), origin, 1, 0x00ff00))
 scene.add(new THREE.ArrowHelper(new THREE.Vector3(0,0,1), origin, 1, 0x0000ff))
 
 const lights = [
+    new THREE.AmbientLight(0xffffff, 0.6),
     new THREE.PointLight(0xffffff, 1, 0),
     new THREE.PointLight(0xffffff, 1, 0),
     new THREE.PointLight(0xffffff, 1, 0)
