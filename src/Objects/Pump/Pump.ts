@@ -18,8 +18,6 @@ class PumpModel {
         this.object = await objectLoader.loadAsync(object)
 
         this.object.scale.set(0.01, 0.01, 0.01)
-
-        console.log(this)
     }
 }
 
