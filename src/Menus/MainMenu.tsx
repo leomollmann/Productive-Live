@@ -12,8 +12,6 @@ function MainMenu({ close }: Props) {
                 <span>Up: SPACE</span>
                 <span>Down: Left Shift</span>
                 <span>Look: Mouse</span>
-                <span>Build: B</span>
-                <span>Cancel Build: C</span>
             </div>
         </div> 
     )

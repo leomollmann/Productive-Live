@@ -10,9 +10,10 @@ export enum Keys {
 	MoveUp = 'Space',
 	MoveDown = 'ShiftLeft',
 	Escape = 'Escape',
-    ProductionPlanner = 'KeyP',
-    Cancel = 'KeyC',
-	Build = 'KeyB'
+  Planner = 'KeyP',
+  Cancel = 'KeyC',
+	Build = 'KeyB',
+  Metrics = 'KeyM'
 }
 
 type Controls = {
@@ -32,8 +33,9 @@ const controls: Controls = {
 		[Keys.MoveDown]: false,
 		[Keys.Escape]: false,
 		[Keys.Build]: false,
-        [Keys.Cancel]: false,
-        [Keys.ProductionPlanner]: false
+    [Keys.Cancel]: false,
+    [Keys.Planner]: false,
+    [Keys.Metrics]: false
 	},
 	locked: false,
 	mouseX: 0,

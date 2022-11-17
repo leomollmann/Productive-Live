@@ -1,11 +1,11 @@
-import { GameState, OverlayTypes } from "..";
+import { GameState, MenuTypes } from "..";
 import { finishBuild } from "../Tools/build";
 import controls, { Keys, lockControls, unlockControls } from "./interaction";
 import { pauseGame, resumeGame } from "./loop";
 
-function setOverlay(overlay: OverlayTypes) {
+function setOverlay(overlay: MenuTypes) {
     const state = GameState.getState()
-    state.overlay = overlay
+    state.menu = overlay
     GameState.notify()
     document.exitPointerLock()
     unlockControls()
@@ -18,20 +18,20 @@ export function checkUserState() {
         return
     }
 
-    if(state.overlay === OverlayTypes.None) {
+    if(state.menu === MenuTypes.None) {
         if(controls.keys[Keys.Escape]) {
-            setOverlay(OverlayTypes.Main)
+            setOverlay(MenuTypes.Main)
             pauseGame()
             return
         } 
 
-        if(controls.keys[Keys.ProductionPlanner]) {
-            setOverlay(OverlayTypes.ProductionPlanner)
+        if(controls.keys[Keys.Planner]) {
+            setOverlay(MenuTypes.ProductionPlanner)
             return
         }
 
         if(controls.keys[Keys.Build]) {
-            setOverlay(OverlayTypes.Build)
+            setOverlay(MenuTypes.Build)
             return
         }
     }
@@ -39,8 +39,8 @@ export function checkUserState() {
 
 export function setIdleState() {
     const overlay = GameState.getState()
-    if(overlay.overlay === OverlayTypes.Main) resumeGame()
-    overlay.overlay = OverlayTypes.None
+    if(overlay.menu === MenuTypes.Main) resumeGame()
+    overlay.menu = MenuTypes.None
     GameState.notify()
     lockControls()
 }

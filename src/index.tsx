@@ -1,10 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import './index.css'
 import App from './App'
 import MutationStore from './Lib/MutationStore'
 
-export enum OverlayTypes {
+import './index.css'
+import 'antd/dist/antd.css'
+
+export enum MenuTypes {
   None,
   Main,
   ProductionPlanner,
@@ -12,11 +14,12 @@ export enum OverlayTypes {
 }
 
 type GameStateType = { 
-  overlay: OverlayTypes
+  menu: MenuTypes
+  balance: number
   build?: THREE.Object3D 
 }
 
-export const GameState = MutationStore<GameStateType>({ overlay: OverlayTypes.Main })
+export const GameState = MutationStore<GameStateType>({ menu: MenuTypes.Main, balance: 5000 })
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

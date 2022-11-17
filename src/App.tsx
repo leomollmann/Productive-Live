@@ -4,6 +4,7 @@ import { initRenderer } from './Engine/loop'
 import Menus from './Menus/Menus'
 import { PumpMaster } from './Objects/Pump/Pump'
 import { ReservatoryMaster } from './Objects/Reservatory/Reservatory'
+import Overlays from './Overlay/Overlays'
 
 Promise.all([
   PumpMaster.model.load(),
@@ -22,6 +23,7 @@ function App() {
 
   return (
     <>
+      <Overlays />
       <Menus canvas={canvas}/>
       <canvas ref={canvas} id="game" />
     </>
