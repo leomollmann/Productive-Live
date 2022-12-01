@@ -3,7 +3,7 @@ import { GameState } from ".."
 import { lockControls } from "../Engine/interaction"
 import { pauseGame } from "../Engine/loop"
 
-const GAME_OVER_LIMIT = 4000
+const GAME_OVER_LIMIT = -5000
 
 function GameOver() {
   const state = GameState.useObserver()
