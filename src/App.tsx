@@ -4,6 +4,7 @@ import { initRenderer } from './Engine/loop'
 import Menus from './Menus/Menus'
 import { pumpMaster } from './Objects/Pump/Pump'
 import { reservatoryMaster } from './Objects/Reservatory/Reservatory'
+import GameOver from './Overlay/GameOver'
 import Overlays from './Overlay/Overlays'
 
 Promise.all([
@@ -25,6 +26,7 @@ function App() {
     <>
       <Overlays />
       <Menus canvas={canvas}/>
+      <GameOver />
       <canvas ref={canvas} id="game" />
     </>
   );

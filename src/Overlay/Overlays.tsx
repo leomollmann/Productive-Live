@@ -71,7 +71,6 @@ function Overlays() {
   const state = GameState.useObserver()
   checkTutorial(state)
 
-
   return (
     <>
       <div className="absolute top-4 left-4 text-base flex flex-row gap-2 align-bottom">
@@ -82,7 +81,7 @@ function Overlays() {
         <h1 className="text-center mb-2 text-xl">Tutorial</h1>
         <h2 className="font-bold text-center">Phase 0, collect water</h2>
         {state.tutorial.map(x => (
-          <span className="flex flex-row gap-2 items-center text-green">
+          <span key={x.step} className="flex flex-row gap-2 items-center text-green">
             {x.done ? <CheckCircleOutlined/> : null}
             <p className={x.done ? "line-through opacity-60 text-primary" : 'text-primary'}>{x.step}: {x.text}</p>
           </span>
