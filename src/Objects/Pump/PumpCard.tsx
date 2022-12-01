@@ -1,10 +1,9 @@
-import { PumpMaster } from './Pump'
+import { pumpMaster } from './Pump'
 import pumpImg from './Pump.png'
 import parallelImg from './parallel.png'
 import seriesImg from './series.png'
 import iconPropeller from './IconPropeller.png'
 import iconChassi from './IconChassi.png'
-import { GameState } from '../..'
 import { initBuild } from '../../Tools/build'
 import { VerticalAlignBottomOutlined } from '@ant-design/icons'
 import Button from '../../Components/Button'
@@ -14,6 +13,7 @@ import Input from '../../Components/Input'
 import useUpdate from '../../Utils/useUpdate'
 import MinMaxSlider from '../../Components/MinMaxSlider'
 import { Equation } from 'react-equation'
+import { getScalar } from '../../Physics/SI'
 
 type Props = {
   close(): void
@@ -24,7 +24,7 @@ const load_efficiency = new Array(SAMPLE + 1).fill(0).map((_, i) => {
   const step: number = i / SAMPLE
   return {
     load: step,
-    efficiency: PumpMaster.power_efficiency(step)
+    efficiency: pumpMaster.power_efficiency(step)
   }
 })
 
@@ -32,24 +32,23 @@ const maxEfficiency = load_efficiency[SAMPLE]
 
 const price_power = new Array(SAMPLE + 1).fill(0).map((_, i) => {
   const step: number = i / SAMPLE
-  const powerFactor = (step * (PumpMaster.maxPower.value - PumpMaster.minPower.value)) + PumpMaster.minPower.value
+  const powerFactor = (step * (pumpMaster.maxPower.value - pumpMaster.minPower.value)) + pumpMaster.minPower.value
   return {
     power: powerFactor,
-    price: PumpMaster.power_price(step) * PumpMaster.basePrice
+    price: pumpMaster.power_price(step) * pumpMaster.basePrice
   }
 })
 
 export function PumpMasterCard({ close }: Props) {
-  const state = GameState.useObserver()
   const update = useUpdate()
 
+  const scalar = getScalar(pumpMaster.power, pumpMaster.maxPower, pumpMaster.minPower)
+  const price = pumpMaster.power_price(scalar) * pumpMaster.basePrice
+
   const build = () => {
-    state.build = PumpMaster.model.object
-    initBuild()
+    initBuild(pumpMaster, scalar)
     close()
   }
-
-  const price = PumpMaster.power_price((PumpMaster.power.value - PumpMaster.minPower.value) / (PumpMaster.maxPower.value - PumpMaster.minPower.value)) * PumpMaster.basePrice
 
   return (
     <section className='flex flex-col w-full gap-4'>
@@ -59,9 +58,9 @@ export function PumpMasterCard({ close }: Props) {
           className="w-48 h-48 shrink-0 bg-cover"
         />
         <span className='flex flex-col gap-3'>
-          <h1 className='text-center text-xl'>{PumpMaster.title}</h1>
+          <h1 className='text-center text-xl'>{pumpMaster.title}</h1>
           <Button onClick={build}>PLACE <VerticalAlignBottomOutlined /></Button>
-          <p className='mt-2 text-base'>{PumpMaster.description}</p>
+          <p className='mt-2 text-base'>Centrifugal liquid pump, used to move liquid content between pipes. Moves fluid from the center pipe to the bottom pipe when powered.</p>
         </span>
       </div>
 
@@ -99,48 +98,48 @@ export function PumpMasterCard({ close }: Props) {
             <p className='end'>Power:</p>
             <b className='text-lg ml-2'>
               <Input 
-                unit={PumpMaster.power.unit}
-                max={PumpMaster.maxPower.value}
-                min={PumpMaster.minPower.value}
-                value={PumpMaster.power.value}
+                unit={pumpMaster.power.unit}
+                max={pumpMaster.maxPower.value}
+                min={pumpMaster.minPower.value}
+                value={pumpMaster.power.value}
                 onChange={x => {
-                  PumpMaster.power.value = x
+                  pumpMaster.power.value = x
                   update()
                 }}
               />
             </b>
           </div>
           <MinMaxSlider 
-            value={PumpMaster.power.value}
-            max={PumpMaster.maxPower.value}
-            min={PumpMaster.minPower.value}
+            value={pumpMaster.power.value}
+            max={pumpMaster.maxPower.value}
+            min={pumpMaster.minPower.value}
             onChange={x => {
-              PumpMaster.power.value = x
+              pumpMaster.power.value = x
               update()
             }}
-            unit={PumpMaster.power.unit}
+            unit={pumpMaster.power.unit}
           />
           <div className='flex justify-center gap-2 mt-[-1.5rem]'>
             <p>Buy: <b className='text-lg text-red'>{currency(price)}</b></p>
-            <p>Sell: <b className='text-lg text-green'>{currency(price * PumpMaster.sellFactor)}</b></p>
+            <p>Sell: <b className='text-lg text-green'>{currency(price * pumpMaster.sellFactor)}</b></p>
           </div>
         </div>
       </div>
 
       <div>
         <div className='border-b-[1px] border-primary text-primary text-lg italic text-center mb-4 mx-2'>Head x Flow</div>
-        <p>The energy above is split in a ratio between head and flow, how high the fluid will climb vs how fast will it move</p>
+        <p>The energy above is split in a ratio between head and flow, how high the fluid will climb vs how fast will it move.</p>
         <div className='flex flex-row justify-around mt-2'>
           <span className='flex flex-row'>
             <p className='end'>Head:</p>
             <b className='text-lg ml-2'>
               <Input 
                 unit={'%'}
-                max={PumpMaster.maxHeadXFlow}
-                min={PumpMaster.minHeadXFlow}
-                value={PumpMaster.headXFlow}
+                max={pumpMaster.maxHeadXFlow}
+                min={pumpMaster.minHeadXFlow}
+                value={pumpMaster.headXFlow}
                 onChange={x => {
-                  PumpMaster.headXFlow = x
+                  pumpMaster.headXFlow = x
                   update()
                 }}
               />
@@ -152,11 +151,11 @@ export function PumpMasterCard({ close }: Props) {
             <b className='text-lg ml-2'>
               <Input 
                 unit={'%'}
-                max={PumpMaster.maxHeadXFlow}
-                min={PumpMaster.minHeadXFlow}
-                value={100 - PumpMaster.headXFlow}
+                max={pumpMaster.maxHeadXFlow}
+                min={pumpMaster.minHeadXFlow}
+                value={100 - pumpMaster.headXFlow}
                 onChange={x => {
-                  PumpMaster.headXFlow = 100 - x
+                  pumpMaster.headXFlow = 100 - x
                   update()
                 }}
               />
@@ -164,16 +163,16 @@ export function PumpMasterCard({ close }: Props) {
           </span>
         </div>
         <MinMaxSlider 
-          value={PumpMaster.headXFlow}
-          max={PumpMaster.maxHeadXFlow}
-          min={PumpMaster.minHeadXFlow}
+          value={pumpMaster.headXFlow}
+          max={pumpMaster.maxHeadXFlow}
+          min={pumpMaster.minHeadXFlow}
           onChange={x => {
-            PumpMaster.headXFlow = x
+            pumpMaster.headXFlow = x
             update()
           }}
           unit={'%'}
         />
-        <p className='mt-2'>You can add two pumps together in series or parallel to enhance its individual properties</p>
+        <p className='mt-2'>You can add two pumps together in series or parallel to enhance its individual properties.</p>
         <div className='flex gap-4'>
           <div className="w-full p-3 flex flex-col items-center">
             <p className='italic'>SERIES</p>
@@ -196,6 +195,7 @@ export function PumpMasterCard({ close }: Props) {
 
       <div className='pb-4'>
         <div className='border-b-[1px] border-primary text-primary text-lg italic text-center mb-4 mx-2'>Load x Efficiency</div>
+        <p className='mt-2 text-base'>The efficiency curve tells how much of the power is wasted as heat, if the pump suits your system well it will be more efficient.</p>
         <div className='flex flex-col'>
           <ResponsiveContainer height={200} width="100%">
             <AreaChart
@@ -231,12 +231,12 @@ export function PumpMasterCard({ close }: Props) {
 export function PumpCard() {
   return (
     <div className='bg-white shadow p-2 cursor-pointer text-center gap-2 flex flex-col'>
-      <p>{PumpMaster.title}</p>
+      <p>{pumpMaster.title}</p>
       <div className="relative spinable">
         <img height={128} width={128} className="relative z-10" src={iconChassi} />
         <img height={128} width={128} className="absolute bottom-0 spinner" src={iconPropeller} />
       </div>
-      <p className='text-sm'>Power: {PumpMaster.power.value}{PumpMaster.power.unit}</p>
+      <p className='text-sm'>Power: {pumpMaster.power.value}{pumpMaster.power.unit}</p>
     </div>
   )
 }

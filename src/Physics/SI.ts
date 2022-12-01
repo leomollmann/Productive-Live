@@ -69,3 +69,7 @@ export class LiterPerSecond extends SIUnit {
     return new Newton(this.value * seconds.value)
   }
 }
+
+export function getScalar(value: SIUnit, max: SIUnit, min: SIUnit) {
+  return (value.value - min.value) / (max.value - min.value)
+}

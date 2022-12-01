@@ -1,7 +1,8 @@
 import { PumpCard, PumpMasterCard } from "../Objects/Pump/PumpCard"
 import { ToolOutlined, CloseOutlined } from '@ant-design/icons'
-import { ReactNode, useState } from "react"
+import { ReactNode, useEffect, useState } from "react"
 import { ReservatoryCard, ReservatoryMasterCard } from "../Objects/Reservatory/ReservatoryCard"
+import { GameState } from ".."
 
 type Props = {
     close(): void
@@ -14,6 +15,14 @@ const cards = [
 
 function BuildMenu({ close }: Props) {
     const [MasterCard, setCard] = useState<ReactNode>()
+
+    useEffect(() => {
+      const state = GameState.getState()
+      if(!state.tutorial[0].done) {
+        state.tutorial[0].done = true
+        GameState.notify()
+      }
+    }, [])
 
     return (
         <div className="menu p-8">

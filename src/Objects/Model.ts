@@ -2,6 +2,8 @@ import { Material, Object3D } from 'three'
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js'
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
 
+export const BASE_SCALE = 0.01
+
 class Model {
     public material?: Material
     public object?: Object3D
@@ -22,7 +24,7 @@ class Model {
         objectLoader.materials = materials
         this.object = await objectLoader.loadAsync(this.objectPath)
 
-        this.object.scale.set(0.01, 0.01, 0.01)
+        this.object.scale.set(BASE_SCALE, BASE_SCALE, BASE_SCALE)
     }
 }
 

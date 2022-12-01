@@ -2,13 +2,13 @@ import { useEffect, useRef } from 'react'
 import { addListeners } from './Engine/interaction'
 import { initRenderer } from './Engine/loop'
 import Menus from './Menus/Menus'
-import { PumpMaster } from './Objects/Pump/Pump'
-import { ReservatoryMaster } from './Objects/Reservatory/Reservatory'
+import { pumpMaster } from './Objects/Pump/Pump'
+import { reservatoryMaster } from './Objects/Reservatory/Reservatory'
 import Overlays from './Overlay/Overlays'
 
 Promise.all([
-  PumpMaster.model.load(),
-  ReservatoryMaster.model.load()
+  pumpMaster.model.load(),
+  reservatoryMaster.model.load()
 ])
 
 function App() {
