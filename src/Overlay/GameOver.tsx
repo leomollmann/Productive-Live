@@ -23,7 +23,7 @@ function GameOver() {
   if(state.balance > GAME_OVER_LIMIT) return null
 
   return (
-    <div className="menu dark">
+    <div className="menu bg-primary">
       <div id="title">You Failed</div>
       <h1 className="text-lg text-white">Your colony is financially unsustainable,</h1>
       <h1 className="text-lg text-white">your debt has surpassed the profit margin</h1>
