@@ -83,3 +83,30 @@ body {
 .expandable:hover .expander {
   animation: expand 1s infinite linear alternate;
 }
+
+p.end {
+  margin-top: auto;
+  margin-bottom: 0 !important;
+}
+
+.ant-slider {
+  margin-left: 1.5rem !important;
+  margin-right: 1.5rem !important;
+}
+
+.ant-slider-handle {
+  border-color: #3C4F6E !important;
+}
+
+.ant-slider-track {
+  background-color: #3C4F6E !important;
+}
+
+h1, p {
+  margin-bottom: 0 !important;
+}
+
+.details-card {
+  overflow: auto;
+  height: calc(100vh - 9rem);
+}

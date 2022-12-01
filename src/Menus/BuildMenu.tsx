@@ -28,7 +28,7 @@ function BuildMenu({ close }: Props) {
                             </span>
                         )}
                     </section>
-                    <section className="flex bg-white shadow p-2 w-[500px] shrink-0 h-full">
+                    <section className="flex bg-white shadow p-2 w-[500px] shrink-0 details-card">
                         {MasterCard || (
                             <h2 className="text-2xl text-gray-2 m-auto">Select a Building</h2>
                         )}
